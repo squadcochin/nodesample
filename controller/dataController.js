@@ -7,20 +7,9 @@ const con = require('../config/server');
 exports.getAllData = async(req, res, next)=>{
 
 
-    con.Collection.dbName = 'users';
-    let result = con.Collection.find({"password" : 12345});
+    con.Collection('users');
+    let result = con.fin
     console.log(result);
 
 
-    // let result = await resultModel.getAllData();
-    // res.send(
-    //     {   message : "Data Fetched Successfull",
-    //         data : result,
-    //     }
-    // );
-
-    // let users = con.Collection('users');
-    // users.find(async(err, data)=>{
-    //     console.log(await data);
-    // })
 }
