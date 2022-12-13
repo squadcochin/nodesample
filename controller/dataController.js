@@ -6,12 +6,18 @@ const con = require('../config/server');
 //get all users data
 exports.getAllData = async(req, res, next)=>{
 
-    let result = await resultModel.getAllData();
-    res.send(
-        {   message : "Data Fetched Successfull",
-            data : result,
-        }
-    );
+
+    con.Collection.dbName = 'users';
+    let result = con.Collection.find({"password" : 12345});
+    console.log(result);
+
+
+    // let result = await resultModel.getAllData();
+    // res.send(
+    //     {   message : "Data Fetched Successfull",
+    //         data : result,
+    //     }
+    // );
 
     // let users = con.Collection('users');
     // users.find(async(err, data)=>{
