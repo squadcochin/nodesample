@@ -12,16 +12,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-//registration
-router.post('/add-user', userController.registerUser);
-
-//login
-router.post('/user-login', userController.uesrLogin);
-
-//forgot password
-router.post('/password-reset', userController.forgotPassword);
-
 // get all data
-router.get('/getAllData', dataController.getAllData);
+router.get('/getAllData', dataController.findAll);
 
 module.exports = router;
