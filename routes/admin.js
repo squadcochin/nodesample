@@ -16,7 +16,11 @@ router.get('/getAllData', adminController.findAll);
 
 router.post('/createNewUser', adminController.create);
 
-router.post('/deleteAllUser', adminController.deleteAll);
+router.get('/clearAll', adminController.clearAll);
+
+router.get('/findOne/:id', adminController.findOne);
+
+router.post('/updatePassword', adminController.updatePassword);
 
 
 module.exports = router;

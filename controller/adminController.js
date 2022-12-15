@@ -16,7 +16,9 @@ exports.create = async (req, res) => {
         userId: userId,
         name: req.body.userName,
         password: req.body.password,
-        email: req.body.email 
+        email: req.body.email,
+        role: req.body.role,
+        deleted_at : "" 
       });
       // Save Users in the database
       users
@@ -50,11 +52,9 @@ exports.findAll = (req, res) => {
 };
 
 // Delete all Userss from the database.
-exports.deleteAll = (req, res) => {
-  console.log("first")
+exports.clearAll = (req, res) => {
   Users.deleteMany({})
     .then(data => {
-      console.log("second")
       res.send({
         message: `${data.deletedCount} Users were deleted successfully!`
       });
@@ -69,50 +69,48 @@ exports.deleteAll = (req, res) => {
 
 // Find a single Users with an id
 exports.findOne = (req, res) => {
-  const id = req.params.id;
-
-  Users.findById(id)
+  let userId = req.params.id;
+  Users.find({ "userId": userId})
     .then(data => {
-      if (!data)
-        res.status(404).send({ message: "Not found Users with id " + id });
+      if (data.length == 0)
+        res.status(404).send({ message: "Not found Users with id " + userId });
       else res.send(data);
     })
     .catch(err => {
       res
         .status(401)
-        .send({ message: "Error retrieving Users with id=" + id });
+        .send({ message: "Error retrieving Users with id=" + userId });
     });
 };
 
 // Update a Users by the id in the request
-exports.update = (req, res) => {
-  if (!req.body) {
-    return res.status(400).send({
-      message: "Data to update can not be empty!"
-    });
-  }
-
-  const id = req.params.id;
-
-  Users.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-    .then(data => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot update Users with id=${id}. Maybe Users was not found!`
-        });
-      } else res.send({ message: "Users was updated successfully." });
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error updating Users with id=" + id
+exports.updatePassword = (req, res) => {
+  console.log(req.body);
+  const email = req.body.email;
+  const password = req.body.password;
+  Users.updateOne({email : email}, {$set : {password : password}})
+  .then(data=>{
+      if(data.matchedCount >0){
+          res.status(200).send({
+              message : "Successfully password updated",
+              data : data
+          })
+      }
+      else{
+          throw new Error("Invalid Email");
+      }
+  })
+  .catch(err=>{
+      res.status(401).send({
+          message:
+              err.message || "Invalid Credentials"
       });
-    });
+  })
 };
 
 // Delete a Users with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-
   Users.findByIdAndRemove(id, { useFindAndModify: false })
     .then(data => {
       if (!data) {
