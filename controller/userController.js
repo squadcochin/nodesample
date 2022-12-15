@@ -55,3 +55,8 @@ exports.forgotPassword = (req, res, next)=>{
         });
     })
 }
+
+//edit user information
+exports.editUserinfo = (req, res, next)=>{
+    res.satus(200).send("User update successfull");
+}
