@@ -1,3 +1,9 @@
+/*
+The app.js file is to congigure all the properties of an node application and it is also set up the base routes 
+and also import the essential packages 
+Required packages ->
+  express, cookieparser, http-errors, and path etc...
+*/
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -5,16 +11,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 // const dotenv = require('dotenv');
 var adminRouter = require('./routes/admin');
-// var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/users');
 const server = require('./config/server');
-
-
-// let con = server.Collection('users')
-// findOne({_id: '6396f177ddbac50da01c030b'}).then(function(doc) {
-//   console.log(doc);
-//   db.close();
-// });
-
 
 var app = express();
 
@@ -29,8 +27,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// admin routes
 app.use('/admin', adminRouter);
-// app.use('/users', usersRouter);
+
+//user routes
+app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
