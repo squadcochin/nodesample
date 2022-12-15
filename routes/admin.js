@@ -4,8 +4,8 @@ var express = require('express');
 var router = express.Router();
 
 // user defined files/packages 
-const userController = require('../controller/users');
-const dataController = require('../controller/dataController');
+const userController = require('../controller/userController');
+const adminController = require('../controller/adminController');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -13,6 +13,6 @@ router.get('/', function(req, res, next) {
 });
 
 // get all data
-router.get('/getAllData', dataController.findAll);
+router.get('/getAllData', adminController.findAll);
 
 module.exports = router;
