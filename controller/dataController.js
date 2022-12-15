@@ -1,10 +1,24 @@
 const db = require("../model");
 const Users = db.users;
 
+// Retrieve all Userss from the database.
+exports.findAll = (req, res) => {
+  Users.find({})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving users."
+      });
+    });
+};
+
 // Create and Save a new Users
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.body.email) {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
@@ -30,19 +44,7 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Userss from the database.
-exports.findAll = (req, res) => {
-  Users.find({})
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving users."
-      });
-    });
-};
+
 
 // Find a single Users with an id
 exports.findOne = (req, res) => {

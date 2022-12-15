@@ -1,4 +1,4 @@
-//routes file for declaring all the routes 
+// routes file for declaring all the routes 
 // required packages- express, Router 
 var express = require('express');
 var router = express.Router();
