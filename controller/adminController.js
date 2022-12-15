@@ -1,6 +1,40 @@
 const db = require("../model");
 const Users = db.users;
 
+// Create and Save a new Users
+exports.create = async (req, res) => {
+  // Validate request
+  var userId = 1;
+  if (!req.body.email || !req.body.password || !req.body.userName) {
+    res.status(400).send({ message: "Please insert valide data!" });
+    return;
+  }
+  Users.find({})
+    .then(data => {
+      userId = data.length + 1;
+      const users = new Users({
+        userId: userId,
+        name: req.body.userName,
+        password: req.body.password,
+        email: req.body.email 
+      });
+      // Save Users in the database
+      users
+        .save(users)
+        .then(data => {
+          res.send(data);
+        })
+        .catch(err => {
+          res.status(401).send({
+            message:
+              err.message || "Some error occurred while creating the Users."
+          });
+        });
+
+    })
+
+};
+
 // Retrieve all Userss from the database.
 exports.findAll = (req, res) => {
   Users.find({})
@@ -15,36 +49,23 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Create and Save a new Users
-exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.email) {
-    res.status(400).send({ message: "Content can not be empty!" });
-    return;
-  }
-
-  // Create a Users
-  const users = new Users({
-    name: req.body.name,
-    password: req.body.password,
-    email: req.body.email 
-  });
-
-  // Save Users in the database
-  users
-    .save(users)
+// Delete all Userss from the database.
+exports.deleteAll = (req, res) => {
+  console.log("first")
+  Users.deleteMany({})
     .then(data => {
-      res.send(data);
+      console.log("second")
+      res.send({
+        message: `${data.deletedCount} Users were deleted successfully!`
+      });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Users."
+          err.message || "Some error occurred while removing all users."
       });
     });
 };
-
-
 
 // Find a single Users with an id
 exports.findOne = (req, res) => {
@@ -58,7 +79,7 @@ exports.findOne = (req, res) => {
     })
     .catch(err => {
       res
-        .status(500)
+        .status(401)
         .send({ message: "Error retrieving Users with id=" + id });
     });
 };
@@ -111,19 +132,5 @@ exports.delete = (req, res) => {
     });
 };
 
-// Delete all Userss from the database.
-exports.deleteAll = (req, res) => {
-  Users.deleteMany({})
-    .then(data => {
-      res.send({
-        message: `${data.deletedCount} Userss were deleted successfully!`
-      });
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all users."
-      });
-    });
-};
+
 
