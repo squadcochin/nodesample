@@ -58,5 +58,25 @@ exports.forgotPassword = (req, res, next)=>{
 
 //edit user information
 exports.editUserinfo = (req, res, next)=>{
-    res.satus(200).send("User update successfull");
+    let name = req.body.name;
+    let email = req.body.email;
+    let password = req.body.password;
+    Users.findOneAndUpdate({userId : req.params.id}, {$set : {name : name, email : email}}, {new: true})
+    .then(data=>{
+        if(data){
+            res.status(200).send({
+                message : "Successfully updated details",
+                data : data
+            })
+        }
+        else{
+            throw new Error('Update Failed');
+        }
+    })
+    .catch(err=>{
+        res.status(401).send({
+            message:
+                err.message || "Invalid Credentials"
+        });
+    })
 }

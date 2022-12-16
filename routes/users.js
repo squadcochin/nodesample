@@ -14,6 +14,6 @@ router.post('/login', isAuth, userController.uesrLogin);
 // user password update route;
 router.post('/resetPassword', userController.forgotPassword);
 
-router.post('/updateProfile', userController.editUserinfo);
+router.post('/updateProfile/:id', userController.editUserinfo);
 
 module.exports = router;
