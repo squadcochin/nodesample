@@ -4,6 +4,7 @@
 
 const { Timestamp } = require("mongodb");
 
+// Connecting database schema
 module.exports = mongoose => {
   var schema = mongoose.Schema(
     {

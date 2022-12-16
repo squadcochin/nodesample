@@ -1,8 +1,10 @@
 /*
-This file to export the mongo db connection url
-required packages - dotenv
-also set the doenv path  
+    This file to export the mongo db connection url
+    required packages - dotenv
+    also set the doenv path  
 */
+
+
 const dotenv = require('dotenv');
 dotenv.config({
     path : "./.env",

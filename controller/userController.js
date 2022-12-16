@@ -1,12 +1,11 @@
-// controller file for user services
-//required packages - model file for databse and etc...
+/*  
+    controller file for user services
+    required packages - model file for databse and etc...
+*/
+
 const db = require("../model");
 const Users = db.users;
 
-//registration of user
-exports.registerUser = (req, res, next)=>{
-    res.send(JSON.stringify({message : "Registration Successful"}));
-}
 
 //user login
 exports.uesrLogin = (req, res, next)=>{

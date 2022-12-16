@@ -1,3 +1,8 @@
+/*
+    File use to mongoose configuration
+*/
+
+// Requring mongoose connnetion URL
 const dbConfig = require("../config/db.config.js");
 
 const mongoose = require("mongoose");
