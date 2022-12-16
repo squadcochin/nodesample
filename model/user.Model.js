@@ -1,10 +1,18 @@
+/*
+  This file use to declare database connections between collections and fiels details
+*/
+
+const { Timestamp } = require("mongodb");
+
 module.exports = mongoose => {
   var schema = mongoose.Schema(
     {
       userId : Number,
       name: String,
       password: String,
-      email: String
+      email: String,
+      role: String,
+      deletedAt: Date
     },
     { timestamps: true }
   );
