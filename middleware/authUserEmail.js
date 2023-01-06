@@ -6,6 +6,9 @@ Authenticate all the inputs
  the fields should not be empty
 */
 
+
+
+
 // Exporting function for email and password validation
 module.exports = (req, res, next)=>{
     let emailValidate = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
